@@ -47,7 +47,8 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Select category for this product'],
         enum: {
-            values: ['dogs', 'cats', 'rodents', 'fish', 'birds', 'Pesticide'],
+            values: ['dogs', 'cats', 'rodents', 'fish', 'birds', 'Pesticide', 'Training', 'equipment', 'cages', 'special', 'offers'],
+            massage: 'Choose a suitable category from the products',
         },
     },
 });
