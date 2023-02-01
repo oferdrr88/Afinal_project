@@ -51,6 +51,44 @@ const productSchema = new mongoose.Schema({
             massage: 'Choose a suitable category from the products',
         },
     },
+
+    seller: {
+        type: String,
+        required: [true, 'Enter product seller'],
+    },
+    stock: {
+        type: number,
+        required: [true, 'Enter product stock'],
+        maxLength: [5, ' product name cannot  than 5 characters'],
+        default: 0,
+    },
+
+    numberOfreviews: {
+        type: number,
+        default: 0,
+    },
+
+    reviews: [
+        {
+            name: {
+                type: String,
+                required: true,
+            },
+            rating: {
+                type: String,
+                required: true,
+            },
+            comment: {
+                type: String,
+                required: true,
+            },
+        },
+    ],
+
+    createAd: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
 module.exports = mongoose.model('product', productSchema);
