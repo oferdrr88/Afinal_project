@@ -1,4 +1,4 @@
-//const Product = require('../models/products');
+const Product = require('../models/products');
 
 //create new.product  => /api/v1/product/new
 
@@ -13,6 +13,6 @@ exports.newProduct = async (req, res, next) => {
 exports.getProducts = (req, res, next) => {
     res.status(200).json({
         success: true,
-        massage: '[View all products]',
+        massage: '[View all product]',
     });
 };
