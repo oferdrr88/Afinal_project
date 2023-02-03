@@ -1,15 +1,16 @@
 const Product = require('../models/products');
 const ErrorHandele = require('../utils/errorHandele');
+const catchAsyncErrors = require('../middlelwares/catchAsyncErrors');
 
 //create new.product  => admin/api/v1/product/new
 
-exports.newProduct = async (req, res, next) => {
+exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.create(req.body);
     res.status(201).json({
         success: true,
         product,
     });
-};
+});
 
 // get all products => /api/v1/products
 
@@ -31,10 +32,7 @@ exports.getSingleProduct = async (req, res, next) => {
     if (!product) {
         return next(new ErrorHandele('Product noh found', 404));
     }
-    res.status(200).json({
-        success: true,
-        product,
-    });
+    return next(new ErrorHandele('Product noh found', 404));
 };
 
 // update product => /admin/api/v1/product/:id
@@ -42,11 +40,9 @@ exports.getSingleProduct = async (req, res, next) => {
 exports.updateProduct = async (req, res, next) => {
     let product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found',
-        });
+        return next(new ErrorHandele('Product noh found', 404));
     }
+
     product = await Product.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
         runValidators: true,
@@ -62,10 +58,7 @@ exports.updateProduct = async (req, res, next) => {
 exports.deleteProduct = async (req, res, next) => {
     const product = await Product.findById(req.params.id);
     if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: 'Product not found',
-        });
+        return next(new ErrorHandele('Product noh found', 404));
     }
     await Product.deleteOne();
 
