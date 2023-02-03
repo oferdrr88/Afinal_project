@@ -1,4 +1,6 @@
 "# Afinal_project" 
  לבדוק מיידל פרודאקת
 
- npm run dev
+ 
+ 
+ await product.deleteOne()
