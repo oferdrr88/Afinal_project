@@ -7,7 +7,7 @@ const { getProducts, newProduct, getSingleProduct, updateProduct, deletedOnePPro
 router.route('/products').get(getProducts);
 router.route('/products/:id').get(getSingleProduct);
 
-router.route('/admin/products/new').post(newProduct);
+router.route('/products/new').post(newProduct);
 
 router.route('/admin/products/:id').put(updateProduct);
 
