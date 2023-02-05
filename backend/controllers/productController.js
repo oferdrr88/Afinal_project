@@ -15,7 +15,7 @@ exports.newProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
     const apiFeatures = new APIFeatures(Product.find(), req.query).search();
-    let products = await apiFeatures.query;
+    const products = await apiFeatures.query;
 
     res.status(200).json({
         success: true,
@@ -62,7 +62,7 @@ exports.updateProduct = async (req, res, next) => {
 // Deleted one Product => /api/v1/admin/products/:id
 
 exports.deletedOnePProduct = async (req, res, next) => {
-    product = await Product.findById(req.params.id);
+    Product = await Product.findById(req.params.id);
 
     if (!product) {
         return res.status(404).json({

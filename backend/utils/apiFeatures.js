@@ -12,8 +12,15 @@ class APIFeatures {
                   },
               }
             : {};
+        console.log(Keyword);
         this.query = this.query.find({ ...Keyword });
         return this;
+    }
+    filter() {
+        const queryCopy = { ...this.queryStr };
+        console.log(queryCopy);
+        //     // Renove fields the query
+        const removeFields = ['keyword', 'limit', 'page'];
     }
 }
 
