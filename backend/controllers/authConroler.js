@@ -24,3 +24,37 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
         token,
     });
 });
+
+//login user => /a[i/v1/login]
+
+exports.loginUser = catchAsyncError(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    //checks if email password by user
+
+    if (!email || !password) {
+        return next(new Errorhandler('Enter email & password', 400));
+    }
+
+    // finding user in Database
+
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!User) {
+        return next(new Errorhandler('Invalid Email or Password,401'));
+    }
+
+    // chack if password corrct
+
+    const isPasswordMatched = await user.comparePassword(password);
+
+    if (!isPasswordMatched) {
+        return next(new Errorhandler('Invalid Email or Password,401'));
+    }
+
+    const token = user.getJwtToken();
+    res.status(200).json({
+        success: true,
+        token,
+    });
+});
