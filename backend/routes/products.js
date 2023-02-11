@@ -6,13 +6,13 @@ const { getProducts, newProduct, getSingleProduct, updateProduct, deletedOnePPro
 
 const { isAuthenticatedUser } = require('../middlelwares/auth');
 
-router.route('/products').get(isAuthenticatedUser, getProducts);
+router.route('/products').get(getProducts);
 router.route('/products/:id').get(getSingleProduct);
 
-router.route('/products/new').post(newProduct);
+router.route('/products/new').post(isAuthenticatedUser, newProduct);
 
 router.route('/admin/products/:id').put(updateProduct);
 
-router.route('/admin/products/:id').put(updateProduct).delete(deletedOnePProduct);
+router.route('/admin/products/:id').put(isAuthenticatedUser, updateProduct).delete(isAuthenticatedUser, deletedOnePProduct);
 
 module.exports = router;
