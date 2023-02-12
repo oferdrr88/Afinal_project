@@ -1,9 +1,9 @@
-const User = require('../models/user');
-const Errorhandler = require('../utils/errorHandeler');
 const catchAsyncError = require('../middlelwares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
+const Errorhandler = require('../utils/errorHandeler');
+const User = require('../models/user');
 
 //Register auser => /api/v1/register
 
