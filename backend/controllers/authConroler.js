@@ -22,7 +22,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 
     //
 
-    // const token = user.getJwtToken();
+    //const token = user.getJwtToken();
     // res.status(200).json({
     //     success: true,
     //     token,
@@ -88,7 +88,7 @@ exports.forgotePassword = catchAsyncError(async (req, res, next) => {
         await sendEmail({
             email: user.email,
             subject: 'ShopIT Password Recovery',
-
+            user,
             message,
         });
 
@@ -134,6 +134,49 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
+// get logged user details => /api/v1/me
+
+exports.getUserProfile = catchAsyncError(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
+// update/ change password => /api/v1/password/update
+
+exports.updatePassword = catchAsyncError(async (req, res, next) => {
+    const user = await User.findById(req.user.id).select('+password');
+    const isMatchched = await user.comparePassword(req.body.oldPassword);
+    if (!isMatchched) {
+        return next('Old password is incorrect', 400);
+    }
+    user.password = req.body.password;
+    await user.save();
+    sendToken(user, 300, res);
+});
+
+// update user profile => /api/v1/me/apdate
+exports.updateProfile = catchAsyncError(async (req, res, next) => {
+    const newUserData = {
+        name: req.body.name,
+        email: req.body.email,
+    };
+
+    // avatar todo
+
+    const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false,
+    });
+
+    res.status(200).json({
+        success: true,
+    });
+});
+
 // Logout
 
 exports.logout = catchAsyncError(async (req, res, next) => {
@@ -144,5 +187,30 @@ exports.logout = catchAsyncError(async (req, res, next) => {
     res.status(200).json({
         success: true,
         massage: 'LogOut',
+    });
+});
+
+// Admin rout
+
+// get All users
+exports.allUsers = catchAsyncError(async (req, res, next) => {
+    const users = await User.find();
+    res.status(200).json({
+        cuccsrs: true,
+        users,
+    });
+});
+
+// Get user details   =>   /api/v1/admin/user/:id
+exports.getUsersDetails = catchAsyncError(async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+
+    if (!user) {
+        return next(new Errorhandler(`User does not found with id: ${req.params.id}`));
+    }
+
+    res.status(200).json({
+        success: true,
+        user,
     });
 });
