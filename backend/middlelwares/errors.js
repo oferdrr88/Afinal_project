@@ -22,6 +22,25 @@ module.exports = (err, req, res, next) => {
             error = new ErrorHandler(message, 400);
         }
     }
+    // hamdling mongoose dep key err
+
+    if (err.code === 11000) {
+        const massage = `Duplicate ${Object.Keys(err.KeyValue)} entred`;
+        error = new ErrorHandler(message, 400);
+    }
+
+    // hamdling worng JWT err
+    if (err.name === 'jsonWebTokenEror') {
+        const message = 'JSON web  token is unvalid , TRY again';
+        err = new ErrorHandler(message, 400);
+    }
+
+    // hamdling Expired   err
+    if (err.name === 'TokenExpiredEror') {
+        const message = 'JSON web  token isExpired , TRY again';
+        err = new ErrorHandler(message, 400);
+    }
+
     //     // Worng Mongoose obj ID error
     if (err.name === 'CastError') {
         const massage = `REsource not found invalid : ${err.path}`;
