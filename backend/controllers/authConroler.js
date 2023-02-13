@@ -91,7 +91,7 @@ exports.forgotePassword = catchAsyncError(async (req, res, next) => {
             user,
             message,
         });
-
+        console.log(message);
         res.status(200).json({
             success: true,
             message: `Email sent to: ${user.email}`,
@@ -106,8 +106,9 @@ exports.forgotePassword = catchAsyncError(async (req, res, next) => {
     }
 });
 
-// reset Password => /api/v1/password/reset/:token
+// Reset Password   =>  /api/v1/password/reset/:token
 exports.resetPassword = catchAsyncError(async (req, res, next) => {
+    // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex');
 
     const user = await User.findOne({
@@ -116,21 +117,21 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
     });
 
     if (!user) {
-        return next('password reset invalid or has been expired', 400);
+        return next(new Errorhandler('Password reset token is invalid or has been expired', 400));
     }
 
     if (req.body.password !== req.body.confirmPassword) {
-        return next(new Errorhandler('password does not match', 400));
+        return next(new Errorhandler('Password does not match', 400));
     }
 
-    //Setup new password
-
+    // Setup new password
     user.password = req.body.password;
 
     user.resetPasswordToken = undefined;
     user.resetPasswordExpire = undefined;
 
     await user.save();
+
     sendToken(user, 200, res);
 });
 
