@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 //handele Uncode exceptions
 process.on('uncaughtException', (err) => {
-    console.log(`ERROR:,${err.messge}`);
+    console.log(`ERROR:,${err.massage}`);
     console.log('ERROR: shot down server');
     process.exit(1);
 });
@@ -20,7 +20,7 @@ const server = app.listen(process.env.PORT, () => {
 
 //handel unhandel promise rejctions
 process.on('unhandel promise rejctions', (err) => {
-    console.log(`ERROR: ${err.messge}`);
+    console.log(`ERROR: ${err.stack}`);
     console.log('ERROR: shot down server unhandel promise rejctions');
     server.close(() => {
         process.exit(1);
