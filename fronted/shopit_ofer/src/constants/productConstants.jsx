@@ -1,0 +1,5 @@
+
+export const ALL_PRODUCTA_REQUEST = 'ALL_PRODUCTA_REQUEST'
+  export const      ALL_PRODUCTA_SUCCESS = 'ALL_PRODUCTA_SUCCESS'
+export const      ALL_PRODUCTA_FAIL = 'ALL_PRODUCTA__FAIL'
+export const        CLEAR_ERRORS = 'CLEAR_ERRORS'
