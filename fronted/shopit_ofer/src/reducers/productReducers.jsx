@@ -18,7 +18,7 @@ case ALL_PRODUCTA_REQUEST:
     return{
         loading:false,
         products:action.payloud.products,
-        productsCount:action.payloud.productsCount
+        // productsCount:action.payloud.productsCount
     }
 
     case ALL_PRODUCTA_FAIL:
