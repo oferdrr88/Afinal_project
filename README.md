@@ -4,8 +4,8 @@
  
  
  await product.deleteOne()
-
- npm run prod
+npm run prod
+ 
 
  npm run dev
  
