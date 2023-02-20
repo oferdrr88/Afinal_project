@@ -1,6 +1,6 @@
 import { ALL_PRODUCTA_REQUEST, ALL_PRODUCTA_SUCCESS, ALL_PRODUCTA_FAIL, CLEAR_ERRORS } from '../constants/productConstants';
 
-export const productsRrducer = (state = { products: [] }, action) => {
+export const productsRrducers = (state = { products: [] }, action) => {
     switch (action.type) {
         case ALL_PRODUCTA_REQUEST:
             return {
@@ -31,3 +31,8 @@ export const productsRrducer = (state = { products: [] }, action) => {
             return state;
     }
 };
+
+// export const ALL_PRODUCTA_REQUEST = ' ALL_PRODUCTA_REQUEST';
+// export const ALL_PRODUCTA_SUCCESS = 'ALL_PRODUCTA_SUCCESS';
+// export const ALL_PRODUCTA_FAIL = 'ALL_PRODUCTA_FAIL';
+// export const CLEAR_ERRORS = 'CLEAR_ERRORS';

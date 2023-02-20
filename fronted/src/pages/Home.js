@@ -6,12 +6,11 @@ import { getProducts } from '../action/productActions';
 import { useEffect } from 'react';
 
 function Home() {
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
     const { loading, products, error, productsCount } = useSelector((state) => state.products);
-
     useEffect(() => {
-        disptach(getProducts());
-    }, [disptach]);
+        dispatch(getProducts());
+    }, [dispatch]);
 
     return (
         <>

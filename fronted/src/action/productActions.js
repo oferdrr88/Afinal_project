@@ -2,17 +2,17 @@ import axios from 'axios';
 
 import { ALL_PRODUCTA_REQUEST, ALL_PRODUCTA_SUCCESS, ALL_PRODUCTA_FAIL, CLEAR_ERRORS } from '../constants/productConstants';
 
-export const getProducts = () => async (disptach) => {
+export const getProducts = () => async (dispatch) => {
     try {
-        disptach({ type: ALL_PRODUCTA_REQUEST });
+        dispatch({ type: ALL_PRODUCTA_REQUEST });
 
         const { data } = await axios.get('/api/v1/products');
-        disptach({
+        dispatch({
             type: ALL_PRODUCTA_SUCCESS,
             payload: data,
         });
     } catch (error) {
-        disptach({
+        dispatch({
             type: ALL_PRODUCTA_FAIL,
             payload: error.response.data.massage,
         });
@@ -20,8 +20,13 @@ export const getProducts = () => async (disptach) => {
 };
 
 // Clear Errors
-export const clearErrors = () => async (disptach) => {
-    disptach({
+export const clearErrors = () => async (dispatch) => {
+    dispatch({
         type: CLEAR_ERRORS,
     });
 };
+
+// export const ALL_PRODUCTA_REQUEST = ' ALL_PRODUCTA_REQUEST';
+// export const ALL_PRODUCTA_SUCCESS = 'ALL_PRODUCTA_SUCCESS';
+// export const ALL_PRODUCTA_FAIL = 'ALL_PRODUCTA_FAIL';
+// export const CLEAR_ERRORS = 'CLEAR_ERRORS';
